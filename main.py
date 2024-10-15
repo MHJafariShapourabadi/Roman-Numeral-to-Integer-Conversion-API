@@ -13,6 +13,7 @@ def roman_to_int(roman: str) -> int:
     roman_prev_char = {'V': 'I', 'X': 'I', 'L': 'X', 'C': 'X', 'D': 'C', 'M': 'C'}
     result = 0
     prev_value = float("inf")
+    prev_prev_value = prev_value
     prev_char = None
     
     try:
@@ -30,6 +31,8 @@ def roman_to_int(roman: str) -> int:
                         raise ValueError
                     result -= prev_value
                     current_value -= prev_value
+                    if current_value > prev_prev_value:
+                        raise ValueError
                     result += current_value
                     if i_next is not None:
                         next_char = roman[i_next]
@@ -37,6 +40,7 @@ def roman_to_int(roman: str) -> int:
                             raise ValueError
             else:
                 result += current_value
+            prev_prev_value = prev_value
             prev_value = current_value
             prev_char = char
     except (KeyError, ValueError):
