@@ -10,17 +10,22 @@ class RomanNumber(BaseModel):
 # Conversion function
 def roman_to_int(roman: str) -> int:
     roman_values = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    roman_prev_char = {'V': 'I', 'X': 'I', 'L': 'X', 'C': 'X', 'D': 'C', 'M': 'C'}
     result = 0
     prev_value = 0
+    prev_char = None
     
     try:
         for char in reversed(roman):
             current_value = roman_values[char]
             if current_value < prev_value:
+                if char != roman_prev_char[prev_char]:
+                    raise KeyError
                 result -= current_value
             else:
                 result += current_value
             prev_value = current_value
+            prev_char = char
     except KeyError:
         raise HTTPException(status_code=400, detail="Invalid Roman numeral")
     
