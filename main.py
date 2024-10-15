@@ -10,7 +10,7 @@ class RomanNumber(BaseModel):
 # Conversion function
 def roman_to_int(roman: str) -> int:
     roman_values = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
-    roman_prev_char = {'V': 'I', 'X': 'IX', 'L': 'X', 'C': 'XC', 'D': 'C', 'M': 'CM'}
+    roman_prev_char = {'I': 'I', 'V': 'I', 'X': 'IX', 'L': 'X', 'C': 'XC', 'D': 'C', 'M': 'CM'}
     result = 0
     prev_value = 0
     prev_char = None
@@ -31,7 +31,6 @@ def roman_to_int(roman: str) -> int:
         raise HTTPException(status_code=400, detail="Invalid Roman numeral")
     
     return result
-
 # Define the API
 @app.post("/convert/")
 async def convert_roman_to_integer(input_data: RomanNumber):
