@@ -44,7 +44,7 @@ def roman_to_int(roman: str) -> int:
             prev_value = current_value
             prev_char = char
     except (KeyError, ValueError):
-        raise Exception("Invalid Roman numeral")
+        raise HTTPException(status_code=400, detail="Invalid Roman numeral")
     
     return result
     
